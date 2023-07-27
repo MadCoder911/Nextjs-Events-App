@@ -1,10 +1,17 @@
 import Link from "next/link";
 import styles from "./button.module.css";
 const Button = (props) => {
+  if (props.link) {
+    return (
+      <Link href={props.link} className={styles.btn}>
+        {props.children}
+      </Link>
+    );
+  }
   return (
-    <Link href={props.link} className={styles.btn}>
+    <button onClick={props.onClick} className={styles.btn}>
       {props.children}
-    </Link>
+    </button>
   );
 };
 export default Button;
