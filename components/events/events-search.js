@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 import Button from "../ui/Button";
 import styles from "./events-search.module.css";
-const EventsSearch = (props) => {
+const EventsSearch = ({ onSearch }) => {
   const yearInputRef = useRef();
   const monthInputRef = useRef();
   const submitHandler = (e) => {
@@ -10,7 +10,7 @@ const EventsSearch = (props) => {
     const selectedYear = yearInputRef.current.value;
     const selectedMonth = monthInputRef.current.value;
 
-    props.onSearch(selectedYear, selectedMonth);
+    onSearch(selectedYear, selectedMonth);
   };
   return (
     <form className={styles.form} onSubmit={submitHandler}>
