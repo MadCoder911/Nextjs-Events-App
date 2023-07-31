@@ -7,13 +7,13 @@ const Home = (props) => {
     </div>
   );
 };
-export default Home;
-
 export async function getStaticProps() {
   const featuredEvents = await filterFeatured();
   return {
     props: {
       featuredEvents: featuredEvents,
     },
+    revalidate: 600,
   };
 }
+export default Home;

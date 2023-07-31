@@ -27,3 +27,17 @@ export const filterById = async (id) => {
   const events = await fetchData();
   return events.find((e) => e.id === id);
 };
+
+//Filter by search
+export const getFilteredEvents = async (dateFilter) => {
+  const { year, month } = dateFilter;
+  const events = await fetchData();
+  let filteredEvents = events.filter((event) => {
+    const eventDate = new Date(event.date);
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    );
+  });
+
+  return filteredEvents;
+};

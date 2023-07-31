@@ -1,37 +1,17 @@
 import { useRouter } from "next/router";
-import { getFilteredEvents } from "../../dummy-data";
+import { getFilteredEvents } from "../../helpers/data-fetching";
 import EventList from "../../components/events/EventList";
 import Button from "../../components/ui/Button";
 
-const FilteredEventsPage = () => {
-  const router = useRouter();
-  const filteredData = router.query.slug;
+const FilteredEventsPage = (props) => {
+  // const router = useRouter();
+  const filteredData = props.events;
 
-  if (!filteredData) {
-    return <p className="center">Loading...</p>;
-  }
-  const numYear = +filteredData[0];
-  const numMonth = +filteredData[1];
-  if (
-    isNaN(numMonth) ||
-    isNaN(numMonth) ||
-    numYear > 2030 ||
-    numYear < 2021 ||
-    numMonth < 1 ||
-    numMonth > 12
-  ) {
-    return (
-      <>
-        <div className="center">
-          <Button link={"/events"}>All Events</Button>
+  // if (!filteredData) {
+  //   return <p className="center">Loading...</p>;
+  // }
 
-          <p>Invalid filters, please stop messing around with my app ! 🤪</p>
-        </div>
-      </>
-    );
-  }
-
-  const filteredEvents = getFilteredEvents({ year: numYear, month: numMonth });
+  const filteredEvents = props.events;
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
@@ -51,4 +31,36 @@ const FilteredEventsPage = () => {
     </div>
   );
 };
+
+export const getServerSideProps = async (context) => {
+  const { params } = context;
+  const numYear = +params.slug[0];
+  const numMonth = +params.slug[1];
+  if (
+    isNaN(numMonth) ||
+    isNaN(numMonth) ||
+    numYear > 2030 ||
+    numYear < 2021 ||
+    numMonth < 1 ||
+    numMonth > 12
+  ) {
+    return {
+      notFound: true,
+      // redirect: {
+      //   destination: "/error",
+      // },
+    };
+  }
+
+  const filteredEvents = await getFilteredEvents({
+    year: numYear,
+    month: numMonth,
+  });
+  return {
+    props: {
+      events: filteredEvents,
+    },
+  };
+};
+
 export default FilteredEventsPage;
