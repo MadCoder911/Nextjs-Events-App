@@ -4,13 +4,6 @@ import EventList from "../../components/events/EventList";
 import Button from "../../components/ui/Button";
 
 const FilteredEventsPage = (props) => {
-  // const router = useRouter();
-  const filteredData = props.events;
-
-  // if (!filteredData) {
-  //   return <p className="center">Loading...</p>;
-  // }
-
   const filteredEvents = props.events;
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
