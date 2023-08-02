@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import EventList from "../../components/events/EventList";
 import EventsSearch from "../../components/events/events-search";
 import { fetchData } from "../../helpers/data-fetching";
+import Head from "next/head";
 const AllEventsPage = (props) => {
   const events = props.events;
   const router = useRouter();
@@ -12,10 +13,17 @@ const AllEventsPage = (props) => {
     router.push(fullPath);
   };
   return (
-    <div>
+    <>
+      <Head>
+        <title>All Events</title>
+        <meta
+          name="description"
+          content="Find great events that allow you to evolve"
+        />
+      </Head>
       <EventsSearch onSearch={findEventsHandler} />
       <EventList items={events} />
-    </div>
+    </>
   );
 };
 

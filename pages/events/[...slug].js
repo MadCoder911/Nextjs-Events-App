@@ -2,12 +2,17 @@ import { useRouter } from "next/router";
 import { getFilteredEvents } from "../../helpers/data-fetching";
 import EventList from "../../components/events/EventList";
 import Button from "../../components/ui/Button";
+import Head from "next/head";
 
 const FilteredEventsPage = (props) => {
   const filteredEvents = props.events;
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+        <Head>
+          <title>Filtered Events</title>
+          <meta name="description" content={`All events for the month`} />
+        </Head>
         <div className="center">
           <Button link={"/events"}>All Events</Button>
           <p>No events found ....😞</p>
